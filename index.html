@@ -6,30 +6,39 @@
   <meta name="description" content="Physis-Lang makes physical language a shared, self-evolving representation for data curation, model training, and video generation. Research from NVIDIA.">
   <meta name="theme-color" content="#175c40">
   <link rel="icon" type="image/png" href="assets/physis-logo.png">
-  <link rel="stylesheet" href="style.css"><script src="site.js?v=portable-3" defer></script>
+  <link rel="stylesheet" href="style.css?v=idea-white-20260929"><script src="site.js?v=mp4-20260929" defer></script>
 </head>
 <body>
 <a class="skip" href="#overview">Skip to content</a>
-<header class="topbar"><a class="brand" href="#"><img class="brand-logo" src="assets/physis-logo.png" alt="Physis logo" width="48" height="48"> Physis-Lang</a><nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#gallery">Gallery</a></nav><a class="paper-nav" href="assets/Physis-Lang.pdf" target="_blank" rel="noopener">Read the paper <span aria-hidden="true">↗</span></a></header>
+<header class="topbar"><a class="brand" href="#"><img class="brand-logo" src="assets/physis-logo.png" alt="Physis logo" width="48" height="48"> Physis-Lang</a><nav aria-label="Main navigation"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#gallery">Gallery</a></nav><a class="paper-nav" href="assets/Physis-Lang.pdf?v=20260929" target="_blank" rel="noopener">Read the paper <span aria-hidden="true">↗</span></a></header>
 <main>
 <section class="hero wrap" id="overview">
   <img class="hero-logo" src="assets/physis-logo.png" alt="Physis" width="104" height="104">
   <h1><span>Physis-Lang</span>Self-Evolving Language as a Physical<br class="desktop"> Representation for Video World Model</h1>
   <p class="authors">Liming Lu<sup>†2</sup>, Xianzheng Ma<sup>†3</sup>, Wenkun He<sup>†2</sup>, Guanqi Zhan<sup>†*1</sup>, Yilin Zhao<sup>1</sup>, Junyu Chen<sup>1</sup>,<br class="desktop"> Mengyao Xu<sup>1</sup>, Jiaojiao Fan<sup>1</sup>, Wenhang Ge<sup>1</sup>, Yuchao Gu<sup>1</sup>, Yunze Liu<sup>1</sup>, Boyi Li<sup>1</sup>, Zhen Dong<sup>1</sup>,<br class="desktop"> Victor Prisacariu<sup>3</sup>, Ming-Yu Liu<sup>1</sup>, Song Han<sup>1</sup>, Han Cai<sup>*1</sup></p>
   <p class="affiliation"><sup>1</sup> NVIDIA &nbsp; <sup>2</sup> MIT &nbsp; <sup>3</sup> University of Oxford <span>† Equal contribution &nbsp; * Corresponding authors</span></p>
-  <div class="hero-actions"><a class="button primary" href="assets/Physis-Lang.pdf" target="_blank" rel="noopener"><span aria-hidden="true">↗</span> Paper</a><a class="button" href="#demo"><span aria-hidden="true">▷</span> Watch the overview</a><a class="button" href="#gallery">Explore videos <span aria-hidden="true">↓</span></a></div>
+  <div class="hero-actions"><a class="button primary" href="assets/Physis-Lang.pdf?v=20260929" target="_blank" rel="noopener"><span aria-hidden="true">↗</span> Paper</a><a class="button" href="#demo"><span aria-hidden="true">▷</span> Watch the overview</a><a class="button" href="#gallery">Explore videos <span aria-hidden="true">↓</span></a></div>
   <p class="hero-thesis">Language can do more than describe a scene.<br>It can represent <em>how the physical world evolves.</em></p>
 </section>
+<section class="leaderboard-band" id="leaderboard"><div class="wrap section">
+  <div class="section-heading"><h2>Physics-IQ Verified</h2><p class="section-subtitle">First and second on the public leaderboard.</p></div>
+  <div class="leaderboard-scores">
+    <article><span class="leaderboard-rank">#1</span><h3>Physis-Lang · Cosmos3-Super</h3><p class="leaderboard-score">48.2 <span>± 1.4</span></p></article>
+    <article><span class="leaderboard-rank">#2</span><h3>Physis-Lang · Cosmos3-Nano</h3><p class="leaderboard-score">43.3 <span>± 1.5</span></p></article>
+  </div>
+  <p class="leaderboard-summary">Super improves on the previous leading score of 42.7 by <strong>5.5 percentage points</strong>. Nano also surpasses the original Cosmos3-Super by mean score.</p>
+  <figure class="leaderboard-figure"><a href="assets/leaderboard-comparison.png" target="_blank" rel="noopener" aria-label="Open the full-size leaderboard comparison"><img src="assets/leaderboard-comparison.png" alt="Before and after leaderboard comparison: Physis-Lang Cosmos3-Super scores 48.2 ± 1.4 and Cosmos3-Nano scores 43.3 ± 1.5, taking the top two places ahead of Cosmos3 Super, Seedance 2.5, and MiniMax H3." width="1983" height="793" loading="lazy"></a></figure>
+  <div class="leaderboard-link"><a class="button primary" href="https://physics-iq-verified.anates.ai/" target="_blank" rel="noopener">View the live leaderboard <span aria-hidden="true">↗</span></a><p class="caption">I2V Verified · Ranked by mean score · September 29, 2026</p></div>
+</div></section>
 <section class="intro-band"><div class="wrap intro-grid"><h2>The Idea</h2><div><p class="section-subtitle">A shared language for physical intelligence.</p><p>Visually convincing videos can still break the laws of physics. Physis-Lang makes causes, interactions, governing principles, and effects explicit in language—then improves that language through feedback. The same representation connects <strong>data curation, model training, and inference.</strong></p></div></div></section>
 
 <section class="section wrap" id="demo">
   <div class="demo-player" id="demo-player">
-    <div class="demo-screen"><iframe id="demo-frame" src="demo/index.html?record=1&amp;t=0&amp;subs=0&amp;v=3" title="Physis-Lang interactive overview" loading="eager" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
-    <div class="demo-controls"><button id="demo-play" type="button" class="small-button" disabled>Loading…</button><label class="sr-only" for="demo-seek">Overview playback position</label><input id="demo-seek" type="range" min="0" max="123.8" step="0.1" value="0" disabled><output id="demo-time" for="demo-seek">0:00 / 2:04</output><button id="demo-fullscreen" class="icon-button" aria-label="Enter fullscreen" type="button">⛶</button></div>
+    <video id="demo-video" controls playsinline preload="metadata" style="display:block;width:100%;height:auto;background:#000" aria-label="Physis-Lang demo video">
+      <source src="assets/intro_video.mp4" type="video/mp4">
+      Your browser does not support embedded video. <a href="assets/intro_video.mp4">Download the demo video</a>.
+    </video>
   </div>
-  <p id="demo-status" class="caption" role="status" hidden></p>
-  <div class="chapters" aria-label="Overview chapters"><button data-time="0">00:00 <span>Comparison</span></button><button data-time="10">00:10 <span>Physical language</span></button><button data-time="22.7">00:23 <span>Self-evolution</span></button><button data-time="56.8">00:57 <span>Data retrieval</span></button><button data-time="77.3">01:17 <span>Results</span></button><button data-time="97.6">01:38 <span>Examples</span></button></div>
-  <p class="caption">Interactive overview. Includes the updated caption-evolution and video-generation plots.</p>
 </section>
 
 <section class="section wrap" id="method">

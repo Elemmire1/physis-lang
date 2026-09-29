@@ -30,40 +30,14 @@ const colors = ['#b6c4bb','#859dbb','#175c40'];
 const names = ['Cosmos3-Nano','Veo 3.1','Physis-Lang (Cosmos3-Nano)'];
 document.getElementById('result-bars').innerHTML = benchmarks.map(([label,scores,min,max]) => `<article class="result-panel"><h3>${label}</h3>${scores.map((v,i)=>`<div class="score-row" aria-label="${names[i]}: ${v}"><div class="score-track" aria-hidden="true"><div class="score-fill" style="width:${(v-min)/(max-min)*100}%;background:${colors[i]}"></div></div><b>${v.toFixed(2)}</b></div>`).join('')}<div class="score-scale" aria-label="Score axis from ${min} to ${max}"><span>${min}</span><span>${(min+max)/2}</span><span>${max}</span></div><p class="score-axis-note">Score · axis starts at ${min}</p></article>`).join('');
 
-const frame = document.getElementById('demo-frame');
-const demoPlay = document.getElementById('demo-play');
-const seek = document.getElementById('demo-seek');
-const time = document.getElementById('demo-time');
-// File URLs give each document a separate opaque origin. Communicate via
-// postMessage instead of reading properties across the iframe boundary.
-const demoBridge={state:{ready:false,t:0,playing:false,loadError:''}};
-function demoCommand(command,value){frame.contentWindow?.postMessage({type:'physis-demo-command',command,value},'*');}
-['play','pause','replay','seek'].forEach(command=>demoBridge[command]=value=>demoCommand(command,value));
-window.addEventListener('message',event=>{
-  if(event.source!==frame.contentWindow||event.data?.type!=='physis-demo-state')return;
-  const s=event.data.state;
-  if(!s||typeof s.ready!=='boolean'||!Number.isFinite(s.t))return;
-  demoBridge.state={ready:s.ready,t:s.t,playing:!!s.playing,loadError:typeof s.loadError==='string'?s.loadError:''};
+// Native video playback works both on GitHub Pages and from local files.
+const mediaObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => { if (!entry.isIntersecting) entry.target.pause(); });
+}, {threshold: 0.05});
+document.querySelectorAll('video').forEach(video => mediaObserver.observe(video));
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) document.querySelectorAll('video').forEach(video => video.pause());
 });
-const api = () => demoBridge;
-const formatTime = t => `${Math.floor(t/60)}:${String(Math.floor(t%60)).padStart(2,'0')}`;
-let dragging = false;
-let demoLoadStarted=Date.now(), demoLoadFailed=false;
-const demoStatus=document.getElementById('demo-status');
-frame.addEventListener('load',()=>{demoLoadStarted=Date.now();demoLoadFailed=false;demoBridge.state={ready:false,t:0,playing:false,loadError:''};demoCommand('status');});
-demoPlay.addEventListener('click', () => {
-  if(demoLoadFailed){demoLoadFailed=false;demoBridge.state={ready:false,t:0,playing:false,loadError:''};demoLoadStarted=Date.now();demoStatus.hidden=true;demoPlay.disabled=true;demoPlay.textContent='Loading…';const url=new URL(frame.src);url.searchParams.set('retry',Date.now());frame.src=url.href;return;}
-  const a=api();if(!a?.state.ready)return; a.state.playing?a.pause():a.state.t>=123.7?a.replay():a.play();
-});
-seek.addEventListener('input',()=>{dragging=true;const a=api();if(a?.state.ready)a.seek(+seek.value);});
-seek.addEventListener('change',()=>{dragging=false;});
-document.querySelectorAll('[data-time]').forEach(b=>b.addEventListener('click',()=>{const a=api();if(a?.state.ready){a.seek(+b.dataset.time);a.play();}else{demoPlay.textContent='Loading…';}}));
-setInterval(()=>{const a=api();if(!a?.state.ready){if(a?.state.loadError||Date.now()-demoLoadStarted>35000){demoLoadFailed=true;demoPlay.disabled=false;demoPlay.textContent='↻ Retry';seek.disabled=true;demoStatus.hidden=false;demoStatus.textContent='The overview could not load. Click Retry to load it again.';}return;}demoLoadFailed=false;demoStatus.hidden=true;demoPlay.disabled=false;seek.disabled=false;demoPlay.textContent=a.state.playing?'Ⅱ Pause':a.state.t>=123.7?'↻ Replay':'▶ Play';if(!dragging)seek.value=a.state.t;time.textContent=`${formatTime(a.state.t)} / 2:04`;},250);
-document.getElementById('demo-fullscreen').addEventListener('click',async()=>{const player=document.getElementById('demo-player');try{if(document.fullscreenElement)await document.exitFullscreen();else if(player.requestFullscreen)await player.requestFullscreen();else window.open('demo/index.html?record=1&autostart=0&subs=0','_blank','noopener');}catch{window.open('demo/index.html?record=1&autostart=0&subs=0','_blank','noopener');}});
-
-const mediaObserver = new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting){if(e.target===frame)api()?.pause();else e.target.pause();}});},{threshold:0.05});
-document.querySelectorAll('video').forEach(v=>mediaObserver.observe(v));mediaObserver.observe(frame);
-document.addEventListener('visibilitychange',()=>{if(document.hidden){document.querySelectorAll('video').forEach(v=>v.pause());api()?.pause();}});
 
 document.getElementById('copy-citation').addEventListener('click',async function(){const text=document.getElementById('bibtex').textContent;try{await navigator.clipboard.writeText(text);this.textContent='Copied';document.getElementById('copy-status').textContent='Citation copied to clipboard.';}catch{const selection=window.getSelection();const range=document.createRange();range.selectNodeContents(document.getElementById('bibtex'));selection.removeAllRanges();selection.addRange(range);this.textContent='Selected — copy text';document.getElementById('copy-status').textContent='Citation selected. Copy the selected text.';}setTimeout(()=>{this.textContent='Copy BibTeX';},2500);});
 
